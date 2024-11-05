@@ -1,0 +1,271 @@
+\documentclass[uplatex,a4paper]{jsarticle}
+\begin{document}
+\title{Stem Leaf Type Distribution Printer}
+\author{Hilofumi Yamamoto \\ University of Tsukuba
+        \thanks{1-1-1 Tenno dai Tsukuba Ibaraki 305 Japan}}
+\date{Version 1.0}
+\maketitle
+
+\section{Print example}
+
+\begin{verbatim}
+        Second_Year
+        N = 48
+  =======================
+    1 | 589
+    2 | 245567889
+    3 | 02256788
+    4 | 00011234456666788999
+    5 | 00013348
+\end{verbatim}
+
+\section{Program list}
+\ifx\gtfam\undefined
+  \ifx\dm\undefined
+    \ifx\tendm\undefined
+      \def\mc{\null}
+    \else
+      \def\mc{\tendm}
+    \fi
+  \else
+    \def\mc{\dm}
+  \fi
+  \ifx\dg\undefined
+    \ifx\tendg\undefined
+      \def\gt{\null}
+    \else
+      \def\gt{\tendg}
+    \fi
+  \else
+    \def\gt{\dg}
+  \fi
+\fi
+\ifx\sc\undefined
+  \def\sc{\null}
+\fi
+
+\tt\mc 
+
+\noindent
+\tt\mc {\tt /}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}
+
+\noindent
+{\tt\mc \kern0.500em}{\tt <}{\tt <}{\tt <}{\tt\mc \kern0.500em}leaf{\tt\mc \kern0.500em}{\tt >}{\tt >}{\tt >}
+
+\noindent
+{\tt\mc \kern0.500em}Stem{\tt\mc \kern0.500em}and{\tt\mc \kern0.500em}leaf{\tt\mc \kern0.500em}style{\tt\mc \kern0.500em}distribution{\tt\mc \kern0.500em}printer
+
+\noindent
+{\tt\mc \kern0.500em}by{\tt\mc \kern0.500em}Hilofumi{\tt\mc \kern0.500em}Yamamoto,{\tt\mc \kern0.500em}University{\tt\mc \kern0.500em}of{\tt\mc \kern0.500em}Tsukuba
+
+\noindent
+{\tt\mc \kern0.500em}Version{\tt\mc \kern0.500em}1.0{\tt\mc \kern0.500em}1996.06.18
+
+\noindent
+{\tt\mc \kern0.500em}Usage:{\tt\mc \kern0.500em}{\tt\%}{\tt\mc \kern0.500em}leaf{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}data{\tt\_\kern.141em}file
+
+\noindent
+{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt *}{\tt /}\tt\mc 
+
+\noindent
+{\tt\#}include{\tt\mc \kern0.500em}{\tt <}stdio.h{\tt >}
+
+\noindent
+\hfill
+
+\noindent
+{\tt\#}define{\tt\mc \kern0.500em}MAX{\tt\_\kern.141em}LINES{\tt\mc \kern1.000em}60
+
+\noindent
+{\tt\#}define{\tt\mc \kern0.500em}BF{\tt\_\kern.141em}SIZE{\tt\mc \kern1.500em}256
+
+\noindent
+{\tt\#}define{\tt\mc \kern0.500em}MAX{\tt\_\kern.141em}DATA{\tt\mc \kern1.000em}100000
+
+\noindent
+\hfill
+
+\noindent
+void{\tt\mc \kern0.500em}stem{\tt\_\kern.141em}and{\tt\_\kern.141em}leaf(int{\tt\mc \kern0.500em}n,{\tt\mc \kern0.500em}int{\tt\mc \kern0.500em}x[n]);
+
+\noindent
+\hfill
+
+\noindent
+int{\tt\mc \kern0.500em}main(void)
+
+\noindent
+{\tt\char'173}
+
+\noindent
+{\tt\mc \kern1.000em}static{\tt\mc \kern0.500em}char{\tt\mc \kern0.500em}buffer[BF{\tt\_\kern.141em}SIZE];
+
+\noindent
+{\tt\mc \kern1.000em}static{\tt\mc \kern0.500em}int{\tt\mc \kern0.500em}x[MAX{\tt\_\kern.141em}DATA];
+
+\noindent
+{\tt\mc \kern1.000em}int{\tt\mc \kern0.500em}n;
+
+\noindent
+{\tt\mc \kern1.000em}n{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;
+
+\noindent
+{\tt\mc \kern1.000em}while(gets(buffer){\tt\mc \kern0.500em}!={\tt\mc \kern0.500em}NULL){\tt\char'173}
+
+\noindent
+{\tt\mc \kern2.000em}if(isdigit(buffer[0]){\tt\mc \kern0.500em}{\tt |}{\tt |}{\tt\mc \kern0.500em}buffer[0]{\tt\mc \kern0.500em}=={\tt\mc \kern0.500em}'.'){\tt\char'173}
+
+\noindent
+{\tt\mc \kern3.000em}x[n]=atoi(buffer);
+
+\noindent
+{\tt\mc \kern3.000em}n++;
+
+\noindent
+{\tt\mc \kern3.000em}{\tt\char'175}{\tt\mc \kern0.500em}else{\tt\mc \kern0.500em}if(isalpha(buffer[0]){\tt\mc \kern0.500em}=={\tt\mc \kern0.500em}1){\tt\char'173}
+
+\noindent
+{\tt\mc \kern4.000em}printf({\tt "}{\tt\char92}t{\tt\%}s{\tt\char92}n{\tt "},buffer);
+
+\noindent
+{\tt\mc \kern3.000em}{\tt\char'175}
+
+\noindent
+{\tt\mc \kern1.000em}{\tt\char'175}
+
+\noindent
+{\tt\mc \kern1.000em}stem{\tt\_\kern.141em}and{\tt\_\kern.141em}leaf(n,{\tt\mc \kern0.500em}x);
+
+\noindent
+{\tt\char'175}
+
+\noindent
+\hfill
+
+\noindent
+void{\tt\mc \kern0.500em}stem{\tt\_\kern.141em}and{\tt\_\kern.141em}leaf(int{\tt\mc \kern0.500em}n,{\tt\mc \kern0.500em}int{\tt\mc \kern0.500em}x[n])
+
+\noindent
+{\tt\char'173}
+
+\noindent
+{\tt\mc \kern1.000em}int{\tt\mc \kern0.500em}h,{\tt\mc \kern0.500em}i,{\tt\mc \kern0.500em}j,{\tt\mc \kern0.500em}k,{\tt\mc \kern0.500em}kmin,{\tt\mc \kern0.500em}kmax;
+
+\noindent
+{\tt\mc \kern1.000em}static{\tt\mc \kern0.500em}int{\tt\mc \kern0.500em}histo[10{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}MAX{\tt\_\kern.141em}LINES];
+
+\noindent
+{\tt\mc \kern1.000em}float{\tt\mc \kern0.500em}xmin,{\tt\mc \kern0.500em}xmax,{\tt\mc \kern0.500em}factor;
+
+\noindent
+{\tt\mc \kern1.000em}xmin{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}xmax{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}x[0];{\tt\mc \kern9.000em}\rm\mc {\tt /}{\tt *}{\tt\mc \kern0.500em}最大値最小値の初期化{\tt\mc \kern0.500em}{\tt *}{\tt /}\tt\mc 
+
+\noindent
+{\tt\mc \kern1.000em}for{\tt\mc \kern0.500em}(i{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}1;{\tt\mc \kern0.500em}i{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}n;{\tt\mc \kern0.500em}i++)
+
+\noindent
+{\tt\mc \kern2.000em}if{\tt\mc \kern2.500em}(x[i]{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}xmin){\tt\mc \kern0.500em}xmin{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}x[i];{\tt\mc \kern1.000em}\rm\mc {\tt /}{\tt *}{\tt\mc \kern0.500em}最小値保存{\tt\mc \kern0.500em}{\tt *}{\tt /}\tt\mc 
+
+\noindent
+{\tt\mc \kern2.000em}else{\tt\mc \kern0.500em}if(x[i]{\tt\mc \kern0.500em}{\tt >}{\tt\mc \kern0.500em}xmax){\tt\mc \kern0.500em}xmax{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}x[i];{\tt\mc \kern1.000em}\rm\mc {\tt /}{\tt *}{\tt\mc \kern0.500em}最大値保存{\tt\mc \kern0.500em}{\tt *}{\tt /}\tt\mc 
+
+\noindent
+{\tt\mc \kern1.000em}factor{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}1;
+
+\noindent
+{\tt\mc \kern1.000em}while(factor{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}xmax{\tt\mc \kern0.500em}{\tt >}{\tt\mc \kern0.500em}32767{\tt\mc \kern0.500em}{\tt |}{\tt |}{\tt\mc \kern0.500em}factor{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}xmin{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}{\tt -}32767)
+
+\noindent
+{\tt\mc \kern2.000em}factor{\tt\mc \kern0.500em}{\tt /}=10;
+
+\noindent
+{\tt\mc \kern1.000em}for{\tt\mc \kern0.500em}({\tt\mc \kern0.500em};{\tt\mc \kern0.500em};{\tt\mc \kern0.500em}){\tt\char'173}
+
+\noindent
+{\tt\mc \kern2.000em}kmin{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}(int)(factor{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}xmin){\tt\mc \kern0.500em}{\tt /}{\tt\mc \kern0.500em}10{\tt\mc \kern0.500em}{\tt -}{\tt\mc \kern0.500em}(xmin{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}0);
+
+\noindent
+{\tt\mc \kern2.000em}kmax{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}(int)(factor{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}xmax){\tt\mc \kern0.500em}{\tt /}{\tt\mc \kern0.500em}10{\tt\mc \kern0.500em};
+
+\noindent
+{\tt\mc \kern2.000em}if(kmax{\tt\mc \kern0.500em}{\tt -}{\tt\mc \kern0.500em}kmin{\tt\mc \kern0.500em}+{\tt\mc \kern0.500em}1{\tt\mc \kern0.500em}{\tt <}={\tt\mc \kern0.500em}MAX{\tt\_\kern.141em}LINES){\tt\mc \kern0.500em}break;
+
+\noindent
+{\tt\mc \kern2.000em}factor{\tt\mc \kern0.500em}{\tt /}={\tt\mc \kern0.500em}10;
+
+\noindent
+{\tt\mc \kern1.000em}{\tt\char'175}
+
+\noindent
+{\tt\mc \kern1.000em}printf({\tt "}{\tt\char92}tN{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}{\tt\%}d{\tt\char92}n{\tt "},{\tt\mc \kern0.500em}n);
+
+\noindent
+{\tt\mc \kern1.000em}printf({\tt "}{\tt\mc \kern1.000em}======================={\tt\char92}n{\tt "});
+
+\noindent
+{\tt\mc \kern1.000em}for{\tt\mc \kern0.500em}(k{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;{\tt\mc \kern0.500em}k{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}10{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}MAX{\tt\_\kern.141em}LINES;{\tt\mc \kern0.500em}k++){\tt\mc \kern0.500em}histo[k]{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;
+
+\noindent
+{\tt\mc \kern1.000em}for{\tt\mc \kern0.500em}(i{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;{\tt\mc \kern0.500em}i{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}n;{\tt\mc \kern0.500em}i++)
+
+\noindent
+{\tt\mc \kern2.000em}histo[(int)(factor{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}x[i]){\tt\mc \kern0.500em}{\tt -}{\tt\mc \kern0.500em}(x[i]{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}0){\tt\mc \kern0.500em}{\tt -}{\tt\mc \kern0.500em}10{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}kmin]++;
+
+\noindent
+{\tt\mc \kern1.000em}if(kmin{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}0{\tt\mc \kern0.500em}{\tt\&}{\tt\&}{\tt\mc \kern0.500em}kmax{\tt\mc \kern0.500em}{\tt >}{\tt\mc \kern0.500em}0){\tt\char'173}
+
+\noindent
+{\tt\mc \kern2.000em}k{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;
+
+\noindent
+{\tt\mc \kern2.000em}for(i{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;{\tt\mc \kern0.500em}i{\tt <}{\tt\mc \kern0.500em}n;{\tt\mc \kern0.500em}i++){\tt\mc \kern0.500em}if(x[i]{\tt\mc \kern0.500em}==0){\tt\mc \kern0.500em}k++;
+
+\noindent
+{\tt\mc \kern2.000em}histo[{\tt -}10{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}kmin{\tt\mc \kern1.500em}]{\tt\mc \kern0.500em}{\tt -}={\tt\mc \kern0.500em}k{\tt\mc \kern0.500em}{\tt /}{\tt\mc \kern0.500em}2;
+
+\noindent
+{\tt\mc \kern2.000em}histo[{\tt -}10{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}kmin{\tt\mc \kern0.500em}{\tt -}1]{\tt\mc \kern0.500em}+={\tt\mc \kern0.500em}k{\tt\mc \kern0.500em}{\tt /}{\tt\mc \kern0.500em}2;
+
+\noindent
+{\tt\mc \kern1.000em}{\tt\char'175}
+
+\noindent
+{\tt\mc \kern1.000em}for{\tt\mc \kern0.500em}(k{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}kmin;{\tt\mc \kern0.500em}k{\tt\mc \kern0.500em}{\tt <}={\tt\mc \kern0.500em}kmax;{\tt\mc \kern0.500em}k++){\tt\char'173}
+
+\noindent
+{\tt\mc \kern2.000em}if(k{\tt\mc \kern0.500em}!={\tt\mc \kern0.500em}{\tt -}1){\tt\mc \kern0.500em}printf({\tt "}{\tt\%}5d{\tt\mc \kern0.500em}{\tt |}{\tt\mc \kern0.500em}{\tt "},{\tt\mc \kern0.500em}k{\tt\mc \kern0.500em}+{\tt\mc \kern0.500em}(k{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}0));
+
+\noindent
+{\tt\mc \kern2.000em}else{\tt\mc \kern4.000em}printf({\tt "}{\tt\mc \kern1.500em}{\tt -}0{\tt\mc \kern0.500em}{\tt |}{\tt\mc \kern0.500em}{\tt "});
+
+\noindent
+{\tt\mc \kern2.000em}for{\tt\mc \kern0.500em}(j{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;{\tt\mc \kern0.500em}j{\tt\mc \kern0.500em}{\tt <}={\tt\mc \kern0.500em}9;{\tt\mc \kern0.500em}j++){\tt\mc \kern0.500em}{\tt\char'173}
+
+\noindent
+{\tt\mc \kern3.000em}if{\tt\mc \kern0.500em}(k{\tt\mc \kern0.500em}{\tt >}={\tt\mc \kern0.500em}0){\tt\mc \kern0.500em}h{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}histo[10{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}(k{\tt\mc \kern0.500em}{\tt -}{\tt\mc \kern0.500em}kmin){\tt\mc \kern0.500em}+{\tt\mc \kern0.500em}j];
+
+\noindent
+{\tt\mc \kern3.000em}else{\tt\mc \kern0.500em}h{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}histo{\tt\mc \kern0.500em}[10{\tt\mc \kern0.500em}{\tt *}{\tt\mc \kern0.500em}(k{\tt\mc \kern0.500em}{\tt -}{\tt\mc \kern0.500em}kmin){\tt\mc \kern0.500em}+{\tt\mc \kern0.500em}9{\tt\mc \kern0.500em}{\tt -}{\tt\mc \kern0.500em}j];
+
+\noindent
+{\tt\mc \kern3.000em}for{\tt\mc \kern0.500em}(i{\tt\mc \kern0.500em}={\tt\mc \kern0.500em}0;{\tt\mc \kern0.500em}i{\tt\mc \kern0.500em}{\tt <}{\tt\mc \kern0.500em}h;{\tt\mc \kern0.500em}i++){\tt\mc \kern0.500em}printf({\tt "}{\tt\%}d{\tt "},{\tt\mc \kern0.500em}j);
+
+\noindent
+{\tt\mc \kern2.000em}{\tt\char'175}
+
+\noindent
+{\tt\mc \kern2.000em}printf({\tt "}{\tt\char92}n{\tt "});
+
+\noindent
+{\tt\mc \kern1.000em}{\tt\char'175}
+
+\noindent
+{\tt\char'175}
+
+\noindent
+\hfill
+
+\noindent
+
+
+\end{document}
