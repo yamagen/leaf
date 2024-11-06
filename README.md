@@ -5,7 +5,7 @@ stem leaf calculator
 ## Synopsis
 
 ```zsh
-$ leaf < input.txt > output.txt
+$ leaf input.txt > output.txt
 ```
 
 ## Description
