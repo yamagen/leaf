@@ -76,7 +76,14 @@ void stem_and_leaf(int n, int *x, int max_lines) {
     free(histo); // Free dynamically allocated memory
 }
 
-int main(void) {
+void usage() {
+    printf("Usage: leaf [data_file1 data_file2 ...]\n");
+    printf("Stem and leaf style distribution printer\n");
+    printf("by Hilofumi Yamamoto, Institute of Science Tokyo\n");
+    printf("Version 2.0 2024.11.05\n");
+}
+
+int main(int argc, char *argv[]) {
     int *x = (int *)malloc(100000 * sizeof(int));
     if (x == NULL) {
         fprintf(stderr, "Memory allocation failed for x\n");
@@ -90,17 +97,55 @@ int main(void) {
         exit(1);
     }
 
-    int n = 0;
-    while (fgets(buffer, 256, stdin) != NULL) {
-        if (isdigit(buffer[0]) || buffer[0] == '.' || buffer[0] == '-') {
-            x[n] = atoi(buffer);
-            n++;
-        } else if (isalpha(buffer[0])) {
-            printf("        %s\n", buffer);
+    if (argc > 1) {
+        // 複数のファイルを処理
+        for (int file_idx = 1; file_idx < argc; file_idx++) {
+            FILE *input = fopen(argv[file_idx], "r");
+            if (input == NULL) {
+                fprintf(stderr, "Error: Cannot open file %s\n", argv[file_idx]);
+                continue; // 次のファイルに進む
+            }
+
+            int n = 0;
+            printf("\nProcessing file: %s\n", argv[file_idx]);
+
+            while (fgets(buffer, 256, input) != NULL) {
+                if (isdigit(buffer[0]) || buffer[0] == '.' || buffer[0] == '-') {
+                    x[n] = atoi(buffer);
+                    n++;
+                } else if (isalpha(buffer[0])) {
+                    printf("        %s\n", buffer);
+                }
+            }
+
+            fclose(input);
+
+            if (n > 0) {
+                stem_and_leaf(n, x, 60);
+            } else {
+                printf("No numerical data found in file %s\n", argv[file_idx]);
+            }
+        }
+    } else {
+        // 標準入力からのデータ処理
+        int n = 0;
+        printf("\nProcessing standard input:\n");
+
+        while (fgets(buffer, 256, stdin) != NULL) {
+            if (isdigit(buffer[0]) || buffer[0] == '.' || buffer[0] == '-') {
+                x[n] = atoi(buffer);
+                n++;
+            } else if (isalpha(buffer[0])) {
+                printf("        %s\n", buffer);
+            }
+        }
+
+        if (n > 0) {
+            stem_and_leaf(n, x, 60);
+        } else {
+            printf("No numerical data found in standard input\n");
         }
     }
-
-    stem_and_leaf(n, x, 60);
 
     free(x);      // Free dynamically allocated memory for x
     free(buffer); // Free dynamically allocated memory for buffer
