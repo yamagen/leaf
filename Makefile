@@ -7,6 +7,7 @@ LDFLAGS =
 TARGET  = leaf
 SOURCE  = leaf.c
 OBJS    = leaf.o
+TEXRM   = $(wildcard *.aux *.log *.dvi *.toc *.out *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.synctex.gz)
 
 # Build target
 $(TARGET): $(OBJS)
@@ -18,8 +19,4 @@ $(OBJS): $(SOURCE)
 
 # Clean up build files
 clean:
-	rm -f $(TARGET) $(OBJS)
-
-# Clean up LaTeX files
-latex-clean:
-	rm -f *.aux *.log *.dvi *.toc *.out *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk
+	rm -f $(TARGET) $(OBJS) $(TEXRM)
