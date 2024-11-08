@@ -37,4 +37,5 @@ Processing file: data1.txt
     0 | 56
     1 | 225
     2 | 3
+
 ```
