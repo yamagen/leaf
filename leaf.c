@@ -4,13 +4,13 @@
 #include <ctype.h>
 #include <string.h>
 
-#define DATE "Last change: 2024/11/10-12:31:45.05"
+#define DATE "Last change: 2024/11/10-12:33:27.05"
 #define VERSION "2.0"
 
 OptionType get_option(const char *arg) {
     if (strcmp(arg, "-h") == 0 || strcmp(arg, "--help") == 0) return OPTION_HELP;
     if (strcmp(arg, "-q") == 0 || strcmp(arg, "--quiet") == 0) return OPTION_QUIET;
-    if (strcmp(arg, "--verbose") == 0 || strcmp(arg, "-v") == 0) return OPTION_VERBOSE;
+    if (strcmp(arg, "-v") == 0 || strcmp(arg, "--verbose") == 0) return OPTION_VERBOSE;
     return OPTION_UNKNOWN;
 }
 
