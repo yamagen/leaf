@@ -9,7 +9,7 @@
 Usage: leaf [options] [data_file1 data_file2 ...]
 Stem and leaf style distribution printer
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/10-16:13:34.05
+Version 2.0 Last change: 2024/11/10-19:15:45.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
@@ -22,7 +22,7 @@ This program reads a file, calculates stems and leaves, and prints a stem-and-le
 
 ## Data File
 
-```text
+```zsh
 $ cat data1.txt
 data_name
 -36
@@ -34,7 +34,11 @@ data_name
 12
 15
 23
+```
 
+In case of a negative value, the program will calculate the stem and leaf as follows:
+
+```zsh
 $ leaf data1.txt
 
 Filename: data1.txt
@@ -42,15 +46,19 @@ data_name
 
 stem * 10 + leaf = 1 * data  (N = 9)
 --------------------
--40 |
--30 | 6
--20 |
--10 | 2
-  0 | 356
- 10 | 225
- 20 | 3
- 30 |
+-4 | 6
+-3 |
+-2 | 2
+-1 | 3
+ 0 | 56
+ 1 | 225
+ 2 | 3
+ 3 |
 ```
+
+Hence, the -36 is calculated as -4 | 6 and -4 means the range from -40 to -30.
+the leaf 6 means the value -36.
+Do not mix up the stem and leaf with the original value.
 
 ## Installation
 
