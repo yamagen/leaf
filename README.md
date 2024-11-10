@@ -1,12 +1,15 @@
 # leaf: stem leaf distribution printer
 
+[![DOI](https://zenodo.org/badge/883773387.svg)](https://doi.org/10.5281/zenodo.14061335)
+![Static Badge](https://img.shields.io/badge/github-repository-blue?logo=github)
+
 ## Synopsis and options
 
 ```zsh
 Usage: leaf [options] [data_file1 data_file2 ...]
 Stem and leaf style distribution printer
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/10-11:54:15.05
+Version 2.0 Last change: 2024/11/10-12:27:00.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
