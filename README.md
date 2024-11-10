@@ -9,7 +9,7 @@
 Usage: leaf [options] [data_file1 data_file2 ...]
 Stem and leaf style distribution printer
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/10-13:09:00.05
+Version 2.0 Last change: 2024/11/10-16:13:34.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
@@ -41,14 +41,15 @@ Filename: data1.txt
 data_name
 
 stem * 10 + leaf = 1 * data  (N = 9)
-----------------
- -4 | 4
- -3 |
- -2 | 8
- -1 | 7
-  0 | 56
-  1 | 225
-  2 | 3
+--------------------
+-40 |
+-30 | 6
+-20 |
+-10 | 2
+  0 | 356
+ 10 | 225
+ 20 | 3
+ 30 |
 ```
 
 ## Installation

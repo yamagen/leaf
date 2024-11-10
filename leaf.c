@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
-#define DATE "Last change: 2024/11/10-12:33:27.05"
+#define DATE "Last change: 2024/11/10-19:08:07.05"
 #define VERSION "2.0"
 
 OptionType get_option(const char *arg) {
@@ -21,6 +22,7 @@ void print_header(float factor, int n) {
 
 void stem_and_leaf(int n, int *x, int max_lines, int quiet, int verbose) {
     int h, i, j, k, kmin, kmax, max_stem_width;
+    char stem_str[10];  // for formatted stem display
     int *histo = (int *)malloc(10 * max_lines * sizeof(int));
     if (histo == NULL) {
         fprintf(stderr, "Memory allocation failed for histo\n");
@@ -29,8 +31,10 @@ void stem_and_leaf(int n, int *x, int max_lines, int quiet, int verbose) {
 
     float xmin = x[0], xmax = x[0], factor = 1.0;
 
+    // Initialize histogram
     for (k = 0; k < 10 * max_lines; k++) histo[k] = 0;
 
+    // Find min and max in data
     for (i = 1; i < n; i++) {
         if (x[i] < xmin) xmin = x[i];
         if (x[i] > xmax) xmax = x[i];
@@ -40,13 +44,15 @@ void stem_and_leaf(int n, int *x, int max_lines, int quiet, int verbose) {
         printf("Initial xmin: %f, xmax: %f\n", xmin, xmax);
     }
 
+    // Scale factor to avoid overflow
     while (factor * xmax > 32767 || factor * xmin < -32767) {
         factor /= 10;
     }
 
+    // Determine kmin and kmax based on scaled xmin and xmax
     while (1) {
-        kmin = (int)(factor * xmin) / 10 - (xmin < 0);
-        kmax = (int)(factor * xmax) / 10;
+        kmin = (int)floor(factor * xmin / 10);
+        kmax = (int)ceil(factor * xmax / 10);
         if (kmax - kmin + 1 <= max_lines) break;
         factor /= 10;
     }
@@ -55,6 +61,7 @@ void stem_and_leaf(int n, int *x, int max_lines, int quiet, int verbose) {
         printf("Factor: %.1g, kmin: %d, kmax: %d\n", factor, kmin, kmax);
     }
 
+    // Calculate width for stem display alignment
     int max_stem = (kmax > -kmin) ? kmax : -kmin;
     max_stem_width = snprintf(NULL, 0, "%+d", max_stem);
 
@@ -62,15 +69,41 @@ void stem_and_leaf(int n, int *x, int max_lines, int quiet, int verbose) {
         print_header(factor, n);
     }
 
+    // Populate histogram with correct handling of negative stems
+  // これは何のための処理か？ここでそのまま出力してもよいのでは？
+  //   
     for (i = 0; i < n; i++) {
-        int adjusted_index = (int)(factor * x[i]);
-        histo[adjusted_index - 10 * kmin]++;
+        int stem = (int)floor(factor * x[i] / 10);
+        int leaf = abs((int)(factor * x[i]) % 10);
+
+        if (stem == 0 && x[i] < 0) {
+            snprintf(stem_str, sizeof(stem_str), "-0");  // Handle -0 case
+        } else {
+            snprintf(stem_str, sizeof(stem_str), "%d", stem);
+        }
+
+        histo[(stem - kmin) * 10 + leaf]++;
     }
 
+    // Print histogram with aligned stems
     for (k = kmin; k <= kmax; k++) {
-        printf(" %*d | ", max_stem_width, k);
+        int stem = k;
+        if (stem == 0 && k < 0) { // 
+            printf("%d deb\n",k);  
+            snprintf(stem_str, sizeof(stem_str), "-0");  // Handle -0 for display
+        } else {
+            snprintf(stem_str, sizeof(stem_str), "%d", stem);
+        }
+
+        // Add a space before positive stems for alignment if kmin is negative
+//        if (stem >= 0 && kmin < 0) {
+//            printf(" ");
+//        }
+        
+        printf("%*s | ", max_stem_width, stem_str);
+
         for (j = 0; j <= 9; j++) {
-            h = histo[10 * (k - kmin) + j];
+            h = histo[(k - kmin) * 10 + j];
             for (i = 0; i < h; i++) printf("%d", j);
         }
         printf("\n");
@@ -104,12 +137,10 @@ void process_file(const char *filename, int *x, int max_lines, int quiet, int ve
     int n = 0;
     char buffer[BUFFER_SIZE];
 
-    // quiet モードでない場合にファイル名を出力
     if (!quiet) {
         printf("\nFilename: %s\n", filename);
     }
 
-    // quiet モードでない場合のみタイトルを出力
     if (fgets(buffer, sizeof(buffer), input) != NULL && !quiet) {
         printf("%s\n", buffer);
     }
@@ -130,12 +161,10 @@ void process_stdin(int *x, int max_lines, int quiet, int verbose) {
     int n = 0;
     char buffer[BUFFER_SIZE];
 
-    // quiet モードでない場合に標準入力のタイトルを出力
     if (!quiet) {
         printf("\nStandard input:\n");
     }
 
-    // quiet モードでない場合のみタイトル行を出力
     if (fgets(buffer, sizeof(buffer), stdin) != NULL && !quiet) {
         printf("%s\n", buffer);
     }
