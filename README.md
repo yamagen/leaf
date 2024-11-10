@@ -6,7 +6,7 @@
 Usage: leaf [options] [data_file1 data_file2 ...]
 Stem and leaf style distribution printer
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/10-11:46:46.05
+Version 2.0 Last change: 2024/11/10-11:54:15.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
@@ -15,7 +15,7 @@ Options:
 
 ## Description
 
-This program reads a file and calculates the number of stems and leaves in the file.
+This program reads a file, calculates stems and leaves, and prints a stem-and-leaf display to show the data distribution. It now supports negative values, enabling analysis of datasets with a broader range of values.
 
 ## Data File
 
