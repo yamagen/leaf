@@ -4,7 +4,8 @@
 #include <ctype.h>
 #include <string.h>
 
-#define DATE "Last change: 2024/11/10-11:30:43.05"
+#define DATE "Last change: 2024/11/10-12:31:45.05"
+#define VERSION "2.0"
 
 OptionType get_option(const char *arg) {
     if (strcmp(arg, "-h") == 0 || strcmp(arg, "--help") == 0) return OPTION_HELP;
@@ -154,7 +155,7 @@ void usage() {
     printf("Usage: leaf [options] [data_file1 data_file2 ...]\n");
     printf("Stem and leaf style distribution printer\n");
     printf("by Hilofumi Yamamoto, Institute of Science Tokyo\n");
-    printf("Version 2.0 %s\n", DATE);
+    printf("Version %s %s\n", VERSION, DATE);
     printf("Options:\n");
     printf("  -h, --help     Show this help message and exit\n");
     printf("  -q, --quiet    Suppress header output\n");
