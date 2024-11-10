@@ -1,4 +1,6 @@
-kihon_data
+data_name
+-36
+-12
 -3
 5
 6
