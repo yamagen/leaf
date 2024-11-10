@@ -9,7 +9,7 @@
 Usage: leaf [options] [data_file1 data_file2 ...]
 Stem and leaf style distribution printer
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/10-19:15:45.05
+Version 2.0 Last change: 2024/11/10-20:04:50.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
@@ -59,6 +59,25 @@ stem * 10 + leaf = 1 * data  (N = 9)
 Hence, the -36 is calculated as -4 | 6 and -4 means the range from -40 to -30.
 the leaf 6 means the value -36.
 Do not mix up the stem and leaf with the original value.
+
+## Standard input supported
+
+```zsh
+$ awk '{print $3}' data4.txt |./leaf
+
+Standard input:
+Third_Year
+
+Stem * 10 + Leaf = Data  (N = 10)
+-----------------------------
+ 0 | 7
+ 1 | 49
+ 2 | 345
+ 3 | 2
+ 4 | 45
+ 5 | 2
+ 6 |
+```
 
 ## Installation
 
