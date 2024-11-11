@@ -4,9 +4,9 @@ CFLAGS  = -std=c99 -O -Wall -Wextra -c
 LDFLAGS = 
 
 # Files
-TARGET  = leaf
-SOURCE  = leaf.c
-OBJS    = leaf.o
+TARGET  = slp
+SOURCE  = slp.c
+OBJS    = slp.o
 TEXRM   = $(wildcard *.aux *.log *.dvi *.toc *.out *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.synctex.gz)
 
 # Build target

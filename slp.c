@@ -1,12 +1,13 @@
-#include "leaf.h"
+#include "slp.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
 
-#define DATE "Last change: 2024/11/10-19:59:54.05"
+#define DATE "Last change: 2024/11/11-09:31:12.05"
 #define VERSION "2.0"
+#define PROGRAM_NAME "slp"
 
 OptionType get_option(const char *arg) {
   if (strcmp(arg, "-h") == 0 || strcmp(arg, "--help") == 0) return OPTION_HELP;
@@ -67,8 +68,7 @@ void stem_and_leaf(int n, int *x, int max_lines, int quiet, int verbose) {
   max_stem_width = snprintf(NULL, 0, "%+d", max_stem);
 
   if (!quiet) {
-    printf("Stem * 10 + Leaf = Data  (N = %d)\n", n);
-    printf("-----------------------------\n");
+    print_header(factor, n);
   }
 
   // Populate histogram (single pass)
@@ -163,8 +163,8 @@ void process_stdin(int *x, int max_lines, int quiet, int verbose) {
 }
 
 void usage() {
-  printf("Usage: leaf [options] [data_file1 data_file2 ...]\n");
-  printf("Stem and leaf style distribution printer\n");
+  printf("Usage: %s [options] [data_file1 data_file2 ...]\n",PROGRAM_NAME);
+  printf("Stem and leaf style distribution plotter\n");
   printf("by Hilofumi Yamamoto, Institute of Science Tokyo\n");
   printf("Version %s %s\n", VERSION, DATE);
   printf("Options:\n");

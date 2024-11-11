@@ -1,4 +1,6 @@
-# Leaf: stem leaf distribution printer
+# slp: stem leaf plotter
+
+[![GitHub license](https://img.shields.io/github/license/yamagen/slp)](
 
 [![DOI](https://zenodo.org/badge/883773387.svg)](https://doi.org/10.5281/zenodo.14061335)
 ![Static Badge](https://img.shields.io/badge/github-repository-blue?logo=github)
@@ -6,10 +8,10 @@
 ## Synopsis and options
 
 ```zsh
-Usage: leaf [options] [data_file1 data_file2 ...]
-Stem and leaf style distribution printer
+Usage: slp [options] [data_file1 data_file2 ...]
+Stem and leaf distribution plotter
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/10-20:04:50.05
+Version 2.0 Last change: 2024/11/11-09:22:40.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
@@ -39,7 +41,7 @@ data_name
 In case of a negative value, the program will calculate the stem and leaf as follows:
 
 ```zsh
-$ leaf data1.txt
+$ slp data1.txt
 
 Filename: data1.txt
 data_name
@@ -63,7 +65,7 @@ Do not mix up the stem and leaf with the original value.
 ## Standard input supported
 
 ```zsh
-$ awk '{print $3}' data4.txt |./leaf
+$ awk '{print $3}' data4.txt |./slp
 
 Standard input:
 Third_Year
