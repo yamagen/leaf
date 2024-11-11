@@ -1,7 +1,6 @@
 # slp: stem leaf plotter
 
-[![GitHub license](https://img.shields.io/github/license/yamagen/slp)](
-
+![GitHub license](https://img.shields.io/github/license/yamagen/slp)
 [![DOI](https://zenodo.org/badge/883773387.svg)](https://doi.org/10.5281/zenodo.14061335)
 ![Static Badge](https://img.shields.io/badge/github-repository-blue?logo=github)
 
@@ -11,7 +10,7 @@
 Usage: slp [options] [data_file1 data_file2 ...]
 Stem and leaf distribution plotter
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/11-09:22:40.05
+Version 2.0 Last change: 2024/11/11-09:35:10.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
