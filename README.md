@@ -10,7 +10,7 @@
 Usage: slp [options] [data_file1 data_file2 ...]
 Stem and leaf distribution plotter
 by Hilofumi Yamamoto, Institute of Science Tokyo
-Version 2.0 Last change: 2024/11/11-09:35:10.05
+Version 2.0 Last change: 2024/11/11-20:14:07.05
 Options:
   -h, --help     Show this help message and exit
   -q, --quiet    Suppress header output
